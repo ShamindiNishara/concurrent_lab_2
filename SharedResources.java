@@ -1,37 +1,32 @@
 import java.util.concurrent.Semaphore;
 
 public class SharedResources {
-        /*
-    busStop class for holding shared variables
-     */
 
-    // Index of the current rider
     public static int riderIndex = 1;
 
-    // Index of the current bus
     public static int busIndex = 1;
 
-    // Shared variable to hold the number of riders waiting to board the bus
+    //  to hold the number of riders waiting to board the bus
     public static int riders = 0;
 
-    // Mutex used to protect riders variable
+    //  to protect riders variable
     public static Semaphore mutex = new Semaphore(1);
 
-    // Semaphore to allow riders to enter the bus stop. If more than 50 are in the bus stop, next thread can't enter
-    public static Semaphore inWaiting = new Semaphore(50);
+    //to allow riders to enter the bus stop. maximum 50 threads can enter at a time
+    public static Semaphore waitingRiders = new Semaphore(50);
 
-    // Semaphore to signal whether a person can board the bus(Can only board when the bus arrives at the bus stop)
-    public static Semaphore busArrived = new Semaphore(0);
+    // to signal whether a person can board the bus(only after a bus has arrived)
+    public static Semaphore busArrived = new Semaphore(0); 
 
-    // Semaphore to signal whether all waiting riders has boarded the bus
+    // to signal whether all waiting riders has boarded the bus
     public static Semaphore fullyBoarded = new Semaphore(0);
 
-    // Increment rider index
+   
     public static void riderIndexIncrement() {
         SharedResources.riderIndex++;
     }
 
-    // Increment bus index
+
     public static void busIndexIncrement() {
         SharedResources.busIndex++;
     }

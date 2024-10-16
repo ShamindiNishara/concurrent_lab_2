@@ -12,12 +12,12 @@ public class BusScheduler implements Runnable {
     @Override
     public void run() {
         while (true) {
-            Bus driver = new Bus(SharedResources.busIndex);
-            Thread driverThread = new Thread(driver);
-            driverThread.start();
+            Bus bus = new Bus(SharedResources.busIndex);
+            Thread busThread = new Thread(bus);
+            busThread.start();
 
             try {
-                Thread.sleep(this.calcBusSleepTime(busArrivalMean, random));
+                Thread.sleep(this.busSleepTime(busArrivalMean, random));
                 SharedResources.busIndexIncrement();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -25,7 +25,7 @@ public class BusScheduler implements Runnable {
         }
     }
 
-    private long calcBusSleepTime(float busArrivalMean, Random random) {
+    private long busSleepTime(float busArrivalMean, Random random) {
         float lambda = 1 / busArrivalMean;
         return Math.round(-Math.log(1 - random.nextFloat()) / lambda);
     }
